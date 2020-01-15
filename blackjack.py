@@ -45,32 +45,33 @@ def blackjack(): #f6
     # fase 4
     while punten_user <= 21 and punten_dealer <= 21:
         hit_of_stand = (input("Do you want another card? Print \"Y\" for more: ")).upper()
-        if (hit_of_stand == "Y"):
+        if hit_of_stand == "Y":
             game['Gebruiker'].append(combinations[0])
             del combinations[0]
             punten_user = punten(game['Gebruiker'], teller_gebruiker)
-            if (punten_dealer <= punten_user):
-                game['Dealer'].append(combinations[0])
-                del combinations[0]
-                punten_dealer = punten(game['Dealer'], teller_computer)
-            print("Your cards: "+str(game['Gebruiker']) + " what gives "+str(punten_user) + " points to user.")
-            print("Dealer's last card: "+str(game['Dealer'][-1]))
-#f5
-        else:
-            if (punten_dealer <= punten_user and punten_dealer < 21):
+            #f5
+            if punten_dealer <= punten_user:
                 game['Dealer'].append(combinations[0])
                 print(combinations[0])
                 del combinations[0]
                 punten_dealer = punten(game['Dealer'], teller_computer)
-            print(str(game['Gebruiker']) + " what gives "+str(punten_user) + " points to the user.")
-            print(str(game['Dealer']) + " punten dealer "+str(punten_dealer)+ " points to the dealer.")
-#Here is something wrong - when dealer has 21, and you 20. Make it stop if you don't want another card.
+            print("Your cards: "+str(game['Gebruiker']) + " what gives "+str(punten_user) + " points.")
+            print("Dealer's last card: "+str(game['Dealer'][-1]))
+#f5
+        if hit_of_stand != "Y" and punten_dealer <= punten_user:
+            game['Dealer'].append(combinations[0])
+            print(combinations[0])
+            del combinations[0]
+            punten_dealer = punten(game['Dealer'], teller_computer)
+        print(str(game['Gebruiker']) + " what gives "+str(punten_user) + " points to the user.")
+        print(str(game['Dealer']) + " punten dealer "+str(punten_dealer)+ " points to the dealer.")
+
 #f4
-    if(punten_user > 21):
+    if punten_user > 21:
         print(str(punten_user) +"! You have lost!")
         score['Dealer'] +=1 #s7
 #f5
-    if(punten_user <= 21 and (punten_dealer > 21 or punten_user > punten_dealer)):
+    if punten_user <= 21 and (punten_dealer > 21 or punten_user > punten_dealer):
         print("Your score is: "+str(punten_user)+". Score of dealer: "+str(punten_dealer)+" You WON!")
         score['Gebruiker'] +=1 #s7
 
