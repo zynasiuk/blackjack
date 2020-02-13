@@ -1,4 +1,6 @@
 import random
+import os
+
 nummers = [2,3,4,5,6,7,8,9,10, "Boer", "Koningin", "Koning", "Aas"]
 kleur = ["klvr", "rt", "hrt", "schp"]
 combinations=[]
@@ -12,9 +14,12 @@ def blackjack(): #f6
             x = (z, y)
             combinations.append(x)
     #Fase 2:
-    random.shuffle(combinations)    #print("First shuffle: ", combinations)
-    random.shuffle(combinations)    #print("Second shuffle: ", combinations)
-    random.shuffle(combinations)    #print("Third shuffle: ", combinations)
+    random.shuffle(combinations)
+    #print("First shuffle: ", combinations)
+    random.shuffle(combinations)
+    #print("Second shuffle: ", combinations)
+    random.shuffle(combinations)
+    #print("Third shuffle: ", combinations)
 
     game = {'Gebruiker': [], 'Dealer': [] }
 
@@ -45,6 +50,7 @@ def blackjack(): #f6
     # fase 4
     while punten_user <= 21 and punten_dealer <= 21:
         hit_of_stand = (input("Do you want another card? Print \"Y\" for more: ")).upper()
+        os.system("cls")
         if hit_of_stand == "Y":
             game['Gebruiker'].append(combinations[0])
             del combinations[0]
@@ -52,23 +58,19 @@ def blackjack(): #f6
             #f5
             if punten_dealer <= punten_user:
                 game['Dealer'].append(combinations[0])
-                print(combinations[0])
                 del combinations[0]
                 punten_dealer = punten(game['Dealer'], teller_computer)
-            print("Your cards: "+str(game['Gebruiker']) + " what gives "+str(punten_user) + " points.")
-            print("Dealer's last card: "+str(game['Dealer'][-1]))
 #f5
         if hit_of_stand != "Y" and punten_dealer <= punten_user:
             game['Dealer'].append(combinations[0])
-            print(combinations[0])
             del combinations[0]
             punten_dealer = punten(game['Dealer'], teller_computer)
         print(str(game['Gebruiker']) + " what gives "+str(punten_user) + " points to the user.")
-        print(str(game['Dealer']) + " punten dealer "+str(punten_dealer)+ " points to the dealer.")
+        print("Dealer's last card: "+str(game['Dealer'][-1]))
 
 #f4
     if punten_user > 21:
-        print(str(punten_user) +"! You have lost!")
+        print(str(punten_user) +"! You have lost! Dealer: "+ str(punten_dealer))
         score['Dealer'] +=1 #s7
 #f5
     if punten_user <= 21 and (punten_dealer > 21 or punten_user > punten_dealer):
@@ -86,6 +88,7 @@ def winner():
 #f6
 while score['Gebruiker'] < 3 and score['Dealer'] < 3:
     new_game = (input("Another round? Print \"Y\" for YES: ")).upper()
+    os.system("cls")
     if (new_game == "Y"):
         print("YOU: " + str(score['Gebruiker']) +" Dealer: "+ str(score['Dealer']))
         blackjack()
